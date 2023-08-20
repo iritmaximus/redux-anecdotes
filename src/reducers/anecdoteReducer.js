@@ -32,6 +32,14 @@ const reducer = (state = initialState, action) => {
           return item;
         }
       });
+
+    case "NEW_ANECDOTE":
+      const newAnecdote = asObject(action.payload.anecdote);
+      console.info("New anecdote:", newAnecdote);
+      return state.concat(newAnecdote);
+
+    default:
+      return state;
   }
 
   return state
