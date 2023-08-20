@@ -7,7 +7,7 @@ export const AnecdoteForm = () => {
   const addAnecdote = event => {
     event.preventDefault();
     dispatch(createAnecdote(event.target.anecdote.value));
-  }
+  };
 
   return (
     <div>
@@ -17,11 +17,14 @@ export const AnecdoteForm = () => {
         <button type="submit">create</button>
       </form>
     </div>
-  )
+  );
 }
 
 export const AnecdoteList = () => {
-  const anecdotes = useSelector(state => state.sort((a, b) => { return b.votes - a.votes }));
+  const sortAnecdotes = (a, b) => { return b.votes - a.votes };
+
+  const filter = useSelector(state => state.filter);
+  const anecdotes = useSelector(state => state.anecdotes.sort(sortAnecdotes)).filter(anecdote => anecdote.content.includes(filter));
   const dispatch = useDispatch();
 
   const vote = (id) => {
