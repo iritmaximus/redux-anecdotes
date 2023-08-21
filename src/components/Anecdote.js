@@ -1,16 +1,14 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { createAnecdote, voteAnecdote, setAnecdotes } from "../reducers/anecdoteReducer";
+import { addAnecdote, voteAnecdote } from "../reducers/anecdoteReducer";
 import { setNotification, clearNotification } from "../reducers/notificationReducer";
-import anecdotesService from "../services/anecdotes";
 
 export const AnecdoteForm = () => {
   const dispatch = useDispatch();
 
-  const addAnecdote = event => {
+  const handleCreate = event => {
     event.preventDefault();
-    dispatch(createAnecdote(event.target.anecdote.value));
+    dispatch(addAnecdote(event.target.anecdote.value));
     dispatch(setNotification("you created \"" + event.target.anecdote.value + "\"")); 
     setTimeout(() => {
       dispatch(clearNotification());
@@ -20,7 +18,7 @@ export const AnecdoteForm = () => {
   return (
     <div>
       <h2>create new</h2>
-      <form onSubmit={addAnecdote}>
+      <form onSubmit={handleCreate}>
         <div><input name="anecdote"/></div>
         <button type="submit">create</button>
       </form>
@@ -35,14 +33,6 @@ export const AnecdoteList = () => {
   const anecdotes = [...useSelector(state => state.anecdotes)].sort(sortAnecdotes).filter(anecdote => anecdote.content.includes(filter));
   const dispatch = useDispatch();
 
-
-  useEffect(() => {
-    const fetchAnecdotes = async () => {
-      const anecdotes = await anecdotesService.getAll();
-      dispatch(setAnecdotes(anecdotes));
-    }
-    fetchAnecdotes();
-  }, [dispatch]);
 
   console.log("filter:", filter);
   console.log("anecdotes:", anecdotes);

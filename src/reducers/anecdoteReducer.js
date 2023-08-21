@@ -36,16 +36,10 @@ const anecdoteSlice = createSlice({
         return item;
       });
     },
-    createAnecdote(state, action) {
+    addAnecdote(state, action) {
       const newAnecdote = asObject(action.payload);
       console.info("New anecdote:", newAnecdote);
-      try {
-        anecdoteService.create(newAnecdote);
-        return state.concat(newAnecdote);
-      } catch (e) {
-        console.error("Error saving anecdote to db,", e);
-        return state;
-      }
+      return state.concat(newAnecdote);
     },
     setAnecdotes(state, action) {
       return action.payload;
@@ -53,5 +47,13 @@ const anecdoteSlice = createSlice({
   }
 });
 
-export const { createAnecdote, voteAnecdote, setAnecdotes } = anecdoteSlice.actions;
+export const initializedAnecdotes = () => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll();
+    console.log("Anecdotes in db:", anecdotes);
+    dispatch(setAnecdotes(anecdotes));
+  }
+}
+
+export const { addAnecdote, voteAnecdote, setAnecdotes } = anecdoteSlice.actions;
 export default anecdoteSlice.reducer;
