@@ -38,9 +38,12 @@ const anecdoteSlice = createSlice({
       const newAnecdote = asObject(action.payload);
       console.info("New anecdote:", newAnecdote);
       return state.concat(newAnecdote);
+    },
+    setAnecdotes(state, action) {
+      return action.payload;
     }
   }
 });
 
-export const { createAnecdote, voteAnecdote } = anecdoteSlice.actions;
+export const { createAnecdote, voteAnecdote, setAnecdotes } = anecdoteSlice.actions;
 export default anecdoteSlice.reducer;
