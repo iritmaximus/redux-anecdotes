@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import anecdoteService from "../services/anecdotes";
+
 
 const anecdotesAtStart = [
   'If it hurts, do it more often',
@@ -37,7 +39,13 @@ const anecdoteSlice = createSlice({
     createAnecdote(state, action) {
       const newAnecdote = asObject(action.payload);
       console.info("New anecdote:", newAnecdote);
-      return state.concat(newAnecdote);
+      try {
+        anecdoteService.create(newAnecdote);
+        return state.concat(newAnecdote);
+      } catch (e) {
+        console.error("Error saving anecdote to db,", e);
+        return state;
+      }
     },
     setAnecdotes(state, action) {
       return action.payload;
