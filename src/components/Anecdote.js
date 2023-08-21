@@ -39,7 +39,7 @@ export const AnecdoteList = () => {
 
   const vote = anecdote => {
     console.log('vote', anecdote.id);
-    dispatch(voteAnecdote(anecdote.id));
+    dispatch(voteAnecdote(anecdote));
 
     // 60% keyboard doesn't have backticks and can't be bothered to open laptop just to write fancy strings
     dispatch(setNotification("you voted \"" + anecdote.content + "\"")); 
