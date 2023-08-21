@@ -1,18 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
 
 import { addAnecdote, voteAnecdote, createAnecdote } from "../reducers/anecdoteReducer";
-import { setNotification, clearNotification } from "../reducers/notificationReducer";
+import { sendNotification } from "../reducers/notificationReducer";
 
 export const AnecdoteForm = () => {
   const dispatch = useDispatch();
 
   const handleCreate = event => {
     event.preventDefault();
-    dispatch(createAnecdote(event.target.anecdote.value));
-    dispatch(setNotification("you created \"" + event.target.anecdote.value + "\"")); 
-    setTimeout(() => {
-      dispatch(clearNotification());
-    }, 5000);
+    const anecdoteContent = event.target.anecdote.value;
+    dispatch(createAnecdote(anecdoteContent));
+    // 60% keyboard doesn't have backticks and can't be bothered to open laptop just to write fancy strings
+    dispatch(sendNotification("you created \"" + anecdoteContent + "\"", 5));
   };
 
   return (
@@ -40,12 +39,7 @@ export const AnecdoteList = () => {
   const vote = anecdote => {
     console.log('vote', anecdote.id);
     dispatch(voteAnecdote(anecdote));
-
-    // 60% keyboard doesn't have backticks and can't be bothered to open laptop just to write fancy strings
-    dispatch(setNotification("you voted \"" + anecdote.content + "\"")); 
-    setTimeout(() => {
-      dispatch(clearNotification());
-    }, 5000);
+    dispatch(sendNotification("you voted \"" + anecdote.content + "\"", 5));
   }
 
   return (
