@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { addAnecdote, voteAnecdote } from "../reducers/anecdoteReducer";
+import { addAnecdote, voteAnecdote, createAnecdote } from "../reducers/anecdoteReducer";
 import { setNotification, clearNotification } from "../reducers/notificationReducer";
 
 export const AnecdoteForm = () => {
@@ -8,7 +8,7 @@ export const AnecdoteForm = () => {
 
   const handleCreate = event => {
     event.preventDefault();
-    dispatch(addAnecdote(event.target.anecdote.value));
+    dispatch(createAnecdote(event.target.anecdote.value));
     dispatch(setNotification("you created \"" + event.target.anecdote.value + "\"")); 
     setTimeout(() => {
       dispatch(clearNotification());
