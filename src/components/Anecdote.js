@@ -24,8 +24,11 @@ export const AnecdoteList = () => {
   const sortAnecdotes = (a, b) => { return b.votes - a.votes };
 
   const filter = useSelector(state => state.filter);
-  const anecdotes = useSelector(state => state.anecdotes.sort(sortAnecdotes)).filter(anecdote => anecdote.content.includes(filter));
+  const anecdotes = [...useSelector(state => state.anecdotes)].sort(sortAnecdotes).filter(anecdote => anecdote.content.includes(filter));
   const dispatch = useDispatch();
+
+  console.log("filter:", filter);
+  console.log("anecdotes:", anecdotes);
 
   const vote = (id) => {
     console.log('vote', id);
