@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { addAnecdote, voteAnecdote, createAnecdote } from "../reducers/anecdoteReducer";
+import { voteAnecdote, createAnecdote } from "../reducers/anecdoteReducer";
 import { sendNotification } from "../reducers/notificationReducer";
 
 export const AnecdoteForm = () => {

@@ -26,6 +26,7 @@
     "eject": "react-scripts eject",
     "server": "json-server -p3030 --watch db.json",
     "lint": "eslint .",
+    "lint:prod": "eslint . --max-warnings=0",
     "fix": "eslint . --fix"
   },
   "eslintConfig": {
